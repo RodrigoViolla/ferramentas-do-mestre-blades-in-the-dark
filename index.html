@@ -1,0 +1,100 @@
+<meta charset="utf-8"/>
+<html>
+    <head>
+        <link rel="stylesheet" href="fonts/Kirsty.ttf" />
+        <script src="ruas.js"></script>
+        <script src="predios.js"></script>
+        <script src="pessoas.js"></script>
+        <script src="gerador.js"></script>
+    </head>    
+    <body>
+        <div style="width: 40%; float: left;">            
+            <div class="cabec">Configurações de Rua:</div>
+            <div class="content">
+                <div>
+                    <label for="detalhesRua">Numero de detalhes:</label>
+                    <input type="number" id="detalhesRua" name="detalhesRua">                
+                </div>
+            </div>
+            <div class="cabec">Configurações de Predios:</div>
+            <div class="content">
+                <div>
+                    <label for="detalhesPredio">Numero de detalhes:</label>
+                    <input type="number" id="detalhesPredio" name="detalhesPredio">                
+                </div>
+                <div>
+                    <input type="checkbox" id="prediosRaros" name="prediosRaros"
+                        checked>
+                    <label for="prediosRaros">Predios Raros</label>
+                </div>            
+                <div>
+                    <label for="quantidadePredios">Quantidade de Predios:</label>
+                    <input type="number" id="quantidadePredios" name="quantidadePredios">                
+                </div>
+            </div>
+            <div class="cabec">Configurações de Pessoas:</div>
+            <div class="content">
+                <div>
+                    <input type="checkbox" id="profissoesRaras" name="profissoesRaras"
+                        checked>
+                    <label for="profissoesRaras">Profissões Raras</label>
+                </div>            
+                <div>
+                    <label for="quantidadePessoas">Quantidade de Pessoas:</label>
+                    <input type="number" id="quantidadePessoas" name="quantidadePessoas">                
+                </div>
+            </div>
+            <div class="cabec">Gerar:</div>
+            <div class="content">
+                <div>
+                    <input type="checkbox" id="rua" name="rua">
+                    <label for="rua">Rua</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="predios" name="predios">
+                    <label for="predios">Predios</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="pessoas" name="pessoas">
+                    <label for="pessoas">Pessoas</label>
+                </div>            
+            </div>
+            
+            <button onclick="gerar()">Gerar</button>
+            
+        </div>
+        <div style="width: 59%; float: right;" id="gerados">
+            
+        </div>
+    </body>
+</html>
+<style>
+@font-face { font-family: Kirsty; src: url('fonts/Kirsty.ttf'); } 
+.cabec{
+    background-color: #111; 
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    font-family: Kirsty;
+    font-size: 20px;
+}
+.content{
+    padding: 10px;
+    background-color: #EEE;
+}
+.titulo{
+    font-weight: bold;
+    font-family: Kirsty;
+    font-size: 20px;
+}
+button{
+    background-color: #111;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    font-family: Kirsty;
+    font-size: 20px;
+    float: right;    
+}
+</style>
