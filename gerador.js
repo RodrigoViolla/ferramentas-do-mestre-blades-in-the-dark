@@ -1,8 +1,8 @@
 function gerar(){
     var ruas = getRuas();
     var predios = getPredios();
-    var pessoas = getPessoas();    
-    var golpes = getGolpes();    
+    var pessoas = getPessoas();
+    var golpes = getGolpes();
 
     var ruaParam = document.getElementById('rua').checked;
     var detalhesRuaParam = document.getElementById('detalhesRua').value;
@@ -120,7 +120,7 @@ function gerar(){
             pessoa.alcunha = pessoas.alcunhas[rand(0,40)];
             pessoa.aparencia = pessoas.aparencias[rand(0,35)];
             pessoa.objetivo = pessoas.objetivos[rand(0,17)];
-            pessoa.metodo = pessoas.metodos[rand(0,17)];            
+            pessoa.metodo = pessoas.metodos[rand(0,17)];
             pessoa.traco = pessoas.tracos[rand(0,35)];
             pessoa.interesse = pessoas.interesses[rand(0,35)];
             pessoa.peculiaridade = pessoas.peculiaridades[rand(0,35)];
@@ -215,16 +215,16 @@ function gerar(){
         }        
     }
     
-    document.getElementById('gerados').innerHTML += html;  
+    document.getElementById('gerados').innerHTML += html;
 }
 
 function limpar(){
     document.getElementById('gerados').innerHTML = "";
-    document.getElementById('relogios').innerHTML = "";  
+    document.getElementById('relogios').innerHTML = "";
 }
 
 function addRelogio(){
-    var relogios = document.getElementById("relogios");    
+    var relogios = document.getElementById("relogios");
     var div = document.createElement("DIV");
     
     var inputNome = document.createElement("INPUT");
@@ -238,7 +238,7 @@ function addRelogio(){
    
     var linha = document.createElement("HR");
     var relogio = document.createElement("CANVAS");
-    var canvas = relogio.getContext("2d");   
+    var canvas = relogio.getContext("2d");
 
     var remover = document.createElement("BUTTON");
     remover.appendChild(document.createTextNode("Remover"));
@@ -247,14 +247,14 @@ function addRelogio(){
     inputNome.onchange = function(){
         canvas.clearRect(0, 0, relogio.width, relogio.height);
         canvas.font = "30px Kirsty";
-        canvas.fillText(inputNome.value, 75, 60);    
+        canvas.fillText(inputNome.value, 75, 60);
         
-        canvas.beginPath();        
+        canvas.beginPath();
         canvas.lineWidth = 5;
         canvas.arc(35, 50, 20, 0, Math.PI * 2);
         canvas.stroke();
 
-        canvas.beginPath();    
+        canvas.beginPath();
         canvas.lineWidth = 20;
         canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
         canvas.stroke();
@@ -263,14 +263,14 @@ function addRelogio(){
     inputTamanho.onchange = function(){
         canvas.clearRect(0, 0, relogio.width, relogio.height);
         canvas.font = "30px Kirsty";
-        canvas.fillText(inputNome.value, 75, 60);    
+        canvas.fillText(inputNome.value, 75, 60);
         
-        canvas.beginPath();        
+        canvas.beginPath();
         canvas.lineWidth = 5;
         canvas.arc(35, 50, 20, 0, Math.PI * 2);
         canvas.stroke();
 
-        canvas.beginPath();    
+        canvas.beginPath();
         canvas.lineWidth = 20;
         canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
         canvas.stroke();
@@ -279,14 +279,14 @@ function addRelogio(){
     inputCompleto.onchange = function(){
         canvas.clearRect(0, 0, relogio.width, relogio.height);
         canvas.font = "30px Kirsty";
-        canvas.fillText(inputNome.value, 75, 60);    
+        canvas.fillText(inputNome.value, 75, 60);
         
-        canvas.beginPath();        
+        canvas.beginPath();
         canvas.lineWidth = 5;
         canvas.arc(35, 50, 20, 0, Math.PI * 2);
         canvas.stroke();
 
-        canvas.beginPath();    
+        canvas.beginPath();
         canvas.lineWidth = 20;
         canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
         canvas.stroke();
@@ -298,7 +298,7 @@ function addRelogio(){
 
     relogio.width = 1000;
     relogio.height = 100;
-    relogio.style.width  = '100%';     
+    relogio.style.width  = '100%';
     
     remover.onclick = function(){
         relogios.removeChild(div);
@@ -322,9 +322,9 @@ function addRelogio(){
     div.appendChild(document.createElement("BR"));
 
     div.appendChild(linha);
-    relogios.appendChild(div);    
+    relogios.appendChild(div);
 }
 
 function rand(min, max){
-    return Math.floor(Math.random() * (+max - +min)) + +min;  
+    return Math.floor(Math.random() * (+max - +min)) + +min;
 }

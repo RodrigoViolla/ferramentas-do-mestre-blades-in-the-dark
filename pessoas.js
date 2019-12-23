@@ -332,7 +332,7 @@ function getPessoas(){
         'Tipógrafo',
         'Estudioso',
         'Escriba',
-        'Faisqueiro (Garimpeiro)',
+        'Faisqueiro (Trabalhador das Barreiras Elétricas)',
         'Coletor de Impostos',
         'Tesoureiro',
         'Sussurro',
