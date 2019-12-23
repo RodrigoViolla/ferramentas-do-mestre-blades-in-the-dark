@@ -2,16 +2,18 @@
 <html>
     <head>
         <link rel="stylesheet" href="fonts/Kirsty.ttf" />
+        <script src="https://kit.fontawesome.com/939de85b07.js" crossorigin="anonymous"></script>
         <script src="ruas.js"></script>
         <script src="predios.js"></script>
         <script src="pessoas.js"></script>
+        <script src="golpes.js"></script>
         <script src="gerador.js"></script>
     </head>    
     <body>
         <div style="width: 40%; float: left;">            
             <div class="cabec">Configurações de Rua:</div>
             <div class="content">
-                <div>
+                <div>                    
                     <label for="detalhesRua">Numero de detalhes:</label>
                     <input type="number" id="detalhesRua" name="detalhesRua">                
                 </div>
@@ -44,6 +46,17 @@
                     <input type="number" id="quantidadePessoas" name="quantidadePessoas">                
                 </div>
             </div>
+            <div class="cabec">Configurações de Golpes:</div>
+            <div class="content">         
+                <div>
+                    <label for="quantidadeGolpes">Quantidade de Golpes:</label>
+                    <input type="number" id="quantidadeGolpes" name="quantidadeGolpes">                
+                </div>
+                <div>
+                    <input type="checkbox" id="surpresa" name="surpresa">
+                    <label for="surpresa">Gerar surpresas</label>
+                </div>
+            </div>
             <div class="cabec">Gerar:</div>
             <div class="content">
                 <div>
@@ -57,10 +70,15 @@
                 <div>
                     <input type="checkbox" id="pessoas" name="pessoas">
                     <label for="pessoas">Pessoas</label>
-                </div>            
+                </div> 
+                <div>
+                    <input type="checkbox" id="golpes" name="golpes">
+                    <label for="golpes">Golpes</label>
+                </div>           
             </div>
             
-            <button onclick="gerar()">Gerar</button>
+            <button onclick="limpar()">Limpar</button>
+            <button onclick="gerar()" style="float: right;">Gerar</button> 
             
         </div>
         <div style="width: 59%; float: right;" id="gerados">
@@ -76,7 +94,7 @@
     padding: 10px;
     font-weight: bold;
     font-family: Kirsty;
-    font-size: 20px;
+    font-size: 25px;
 }
 .content{
     padding: 10px;
@@ -95,6 +113,5 @@ button{
     font-weight: bold;
     font-family: Kirsty;
     font-size: 20px;
-    float: right;    
 }
 </style>

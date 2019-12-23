@@ -2,16 +2,23 @@ function gerar(){
     var ruas = getRuas();
     var predios = getPredios();
     var pessoas = getPessoas();    
+    var golpes = getGolpes();    
 
     var ruaParam = document.getElementById('rua').checked;
     var detalhesRuaParam = document.getElementById('detalhesRua').value;
+
     var prediosParam = document.getElementById('predios').checked;
     var quantidadePrediosParam = document.getElementById('quantidadePredios').value;
     var prediosRarosParam = document.getElementById('prediosRaros').checked;
     var detalhesPredioParam = document.getElementById('detalhesPredio').value;
+
     var pessoasParam = document.getElementById('pessoas').checked;
     var quantidadePessoasParam = document.getElementById('quantidadePessoas').value;
     var profissoesRarasParam = document.getElementById('profissoesRaras').checked;
+    
+    var golpesParam = document.getElementById('golpes').checked;
+    var quantidadeGolpesParam = document.getElementById('quantidadeGolpes').value;
+    var surpresaParam = document.getElementById('surpresa').checked;
 
     var html = "";
 
@@ -36,7 +43,9 @@ function gerar(){
             rua.detalhes.push(ruas.detalhes[rand(0,35)]);
         }       
         
-        html += "<div class='cabec'>Rua</div>"+
+        html += "<div class='cabec'>"+
+        "<i class='fa fa-road'></i> "+
+        "Rua</div>"+
         "<div class='content'>"+
         "Descrição: " + rua.lugar + "<br>" +
         "<hr><div class='titulo'>Impressões</div><br>"+
@@ -74,7 +83,9 @@ function gerar(){
 
             prediosGerados.push(predio);
 
-            html += "<div class='cabec'>Predio</div>"+
+            html += "<div class='cabec'>"+
+            "<i class='fa fa-university '></i> "+
+            "Predio</div>"+
             "<div class='content'>"+
             "Descrição: Predio de " + predio.exterior.material + " e " + predio.exterior.detalhe + "<br>" +
             "Ocupação: " + predio.ocupacao + "<br>" +            
@@ -99,7 +110,7 @@ function gerar(){
             else
                 pessoa.profissao = pessoas.profissoes.comum[rand(0,24)];
 
-            pessoa.sexo = pessoas.sexos[rand(0,2)];
+            pessoa.sexo = pessoas.sexos[rand(0,3)];
             pessoa.nome = pessoas.nomes[rand(0,79)];
             pessoa.sobrenome = pessoas.sobrenomes[rand(0,47)];
             pessoa.alcunha = pessoas.alcunhas[rand(0,40)];
@@ -112,7 +123,9 @@ function gerar(){
             
             pessoasGeradas.push(pessoa);
 
-            html += "<div class='cabec'>Pessoa</div>" +
+            html += "<div class='cabec'>"+
+            "<i class='fa fa-user'></i> "+
+            "Pessoa</div>" +
             "<div class='content'>" +
             "Nome: " + pessoa.nome + " " + pessoa.sobrenome + "<br>" +
             "Alcunha: " + pessoa.alcunha + "<br>" +            
@@ -129,8 +142,75 @@ function gerar(){
             html += "</div>";
         }
     }
+
+    if (golpesParam) {
+        golpesGerados = [];
+
+        for (var i = 0; i < quantidadeGolpesParam; i++) {            
+            var golpe = {};
+
+            if(surpresaParam)
+                golpe.surpresa = golpes.surpresas[rand(0,18)];
+
+            var tipoAlvo = rand(1,5);
+
+            switch(tipoAlvo){
+                case 1:
+                    golpe.alvo = "Civil - "+golpes.alvos.civil[rand(1,6)];
+                    break;
+                case 2:
+                    golpe.alvo = "Criminoso - "+golpes.alvos.criminoso[rand(1,6)];
+                    break;
+                case 3:
+                    golpe.alvo = "Politico - "+golpes.alvos.politico[rand(1,6)];
+                    break;
+                case 4:
+                    golpe.alvo = "Estranho - "+golpes.alvos.estranho[rand(1,6)];
+                    break;
+            }
+
+            var tipoServico = rand(1,5);
+
+            switch(tipoServico){
+                case 1:
+                    golpe.servico = "Ladinagem - "+golpes.servicos.ladinagem[rand(0,6)];
+                    break;
+                case 2:
+                    golpe.servico = "Violência - "+golpes.servicos.violencia[rand(0,6)];
+                    break;
+                case 3:
+                    golpe.servico = "Submundo - "+golpes.servicos.submundo[rand(0,6)];
+                    break;
+                case 4:
+                    golpe.servico = "Sobrenatural - "+golpes.servicos.sobrenatural[rand(0,6)];
+                    break;
+            }
+
+            golpe.pessoa = golpes.pessoas[rand(0,6)];
+            golpe.faccao = golpes.faccoes[rand(0,36)];
+            
+            golpesGerados.push(golpe);
+
+            html += "<div class='cabec'>"+
+            "<i class='fas fa-dollar-sign'></i> "+
+            "Golpe</div>"+
+            "<div class='content'>"+
+            "Alvo: "+golpe.alvo+"<br>"+
+            "Servico: "+golpe.servico+"<br>"+
+            "Ligado a: "+golpe.pessoa+"<br>"+
+            "Ligado a: "+golpe.faccao+"<br>";
+
+            html += surpresaParam ? "Surpresa: "+golpe.surpresa+"<br>" : "";
+                        
+            html += "</div>";
+        }        
+    }
     
-    document.getElementById('gerados').innerHTML = html;  
+    document.getElementById('gerados').innerHTML += html;  
+}
+
+function limpar(){
+    document.getElementById('gerados').innerHTML = "";  
 }
 
 function rand(min, max){
