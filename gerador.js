@@ -43,7 +43,7 @@ function gerar(){
             rua.detalhes.push(ruas.detalhes[rand(0,35)]);
         }       
         
-        html += "<div class='cabec'>"+
+        html += "<div><div class='cabec'>"+
         "<i class='fa fa-road'></i> "+
         "Rua</div>"+
         "<div class='content'>"+
@@ -58,7 +58,9 @@ function gerar(){
             html += "- "+rua.detalhes[i]+"<br>";
         }
         
-        html += "</div>";
+        html += "<button style='float: right'"+
+        "onclick='document.getElementById(\"gerados\").removeChild(this.parentNode.parentNode);'>"+
+        "Remover</button><br><br></div></div>";
     }
     
     if (prediosParam) {
@@ -83,7 +85,7 @@ function gerar(){
 
             prediosGerados.push(predio);
 
-            html += "<div class='cabec'>"+
+            html += "<div><div class='cabec'>"+
             "<i class='fa fa-university '></i> "+
             "Predio</div>"+
             "<div class='content'>"+
@@ -95,7 +97,9 @@ function gerar(){
                 html += "- "+ predio.detalhes[j] +"<br>";
             }
             
-            html += "</div>";
+            html += "<button style='float: right'"+
+            "onclick='document.getElementById(\"gerados\").removeChild(this.parentNode.parentNode);'>"+
+            "Remover</button><br><br></div></div>";
         }        
     }
 
@@ -123,11 +127,11 @@ function gerar(){
             
             pessoasGeradas.push(pessoa);
 
-            html += "<div class='cabec'>"+
+            html += "<div><div class='cabec'>"+
             "<i class='fa fa-user'></i> "+
-            "Pessoa</div>" +
-            "<div class='content'>" +
-            "Nome: " + pessoa.nome + " " + pessoa.sobrenome + "<br>" +
+            pessoa.nome + " " + pessoa.sobrenome + 
+            "</div>" +
+            "<div class='content'>" +            
             "Alcunha: " + pessoa.alcunha + "<br>" +            
             "Sexo: " + pessoa.sexo + "<br>" +
             "Aparencia: " + pessoa.aparencia + "<br>" +
@@ -139,7 +143,9 @@ function gerar(){
             "Traço: " + pessoa.traco + "<br>" +
             "Interesse: " + pessoa.interesse;
             
-            html += "</div>";
+            html += "<button style='float: right'"+
+            "onclick='document.getElementById(\"gerados\").removeChild(this.parentNode.parentNode);'>"+
+            "Remover</button><br><br></div></div>";
         }
     }
 
@@ -191,9 +197,10 @@ function gerar(){
             
             golpesGerados.push(golpe);
 
-            html += "<div class='cabec'>"+
+            html += "<div><div class='cabec'>"+
             "<i class='fas fa-dollar-sign'></i> "+
-            "Golpe</div>"+
+            "Golpe"+
+            "</div>"+
             "<div class='content'>"+
             "Alvo: "+golpe.alvo+"<br>"+
             "Servico: "+golpe.servico+"<br>"+
@@ -202,7 +209,9 @@ function gerar(){
 
             html += surpresaParam ? "Surpresa: "+golpe.surpresa+"<br>" : "";
                         
-            html += "</div>";
+            html += "<button style='float: right'"+
+            "onclick='document.getElementById(\"gerados\").removeChild(this.parentNode.parentNode);'>"+
+            "Remover</button><br><br></div></div>";
         }        
     }
     
@@ -210,7 +219,110 @@ function gerar(){
 }
 
 function limpar(){
-    document.getElementById('gerados').innerHTML = "";  
+    document.getElementById('gerados').innerHTML = "";
+    document.getElementById('relogios').innerHTML = "";  
+}
+
+function addRelogio(){
+    var relogios = document.getElementById("relogios");    
+    var div = document.createElement("DIV");
+    
+    var inputNome = document.createElement("INPUT");
+    var labelNome = document.createTextNode(" Nome:");
+
+    var inputTamanho = document.createElement("INPUT");
+    var labelTamanho = document.createTextNode("Tamanho:");
+    
+    var inputCompleto = document.createElement("INPUT");
+    var labelCompleto = document.createTextNode("Completo:");
+   
+    var linha = document.createElement("HR");
+    var relogio = document.createElement("CANVAS");
+    var canvas = relogio.getContext("2d");   
+
+    var remover = document.createElement("BUTTON");
+    remover.appendChild(document.createTextNode("Remover"));
+    remover.style.float = "right";
+
+    inputNome.onchange = function(){
+        canvas.clearRect(0, 0, relogio.width, relogio.height);
+        canvas.font = "30px Kirsty";
+        canvas.fillText(inputNome.value, 75, 60);    
+        
+        canvas.beginPath();        
+        canvas.lineWidth = 5;
+        canvas.arc(35, 50, 20, 0, Math.PI * 2);
+        canvas.stroke();
+
+        canvas.beginPath();    
+        canvas.lineWidth = 20;
+        canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
+        canvas.stroke();
+    };
+
+    inputTamanho.onchange = function(){
+        canvas.clearRect(0, 0, relogio.width, relogio.height);
+        canvas.font = "30px Kirsty";
+        canvas.fillText(inputNome.value, 75, 60);    
+        
+        canvas.beginPath();        
+        canvas.lineWidth = 5;
+        canvas.arc(35, 50, 20, 0, Math.PI * 2);
+        canvas.stroke();
+
+        canvas.beginPath();    
+        canvas.lineWidth = 20;
+        canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
+        canvas.stroke();
+    };
+
+    inputCompleto.onchange = function(){
+        canvas.clearRect(0, 0, relogio.width, relogio.height);
+        canvas.font = "30px Kirsty";
+        canvas.fillText(inputNome.value, 75, 60);    
+        
+        canvas.beginPath();        
+        canvas.lineWidth = 5;
+        canvas.arc(35, 50, 20, 0, Math.PI * 2);
+        canvas.stroke();
+
+        canvas.beginPath();    
+        canvas.lineWidth = 20;
+        canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
+        canvas.stroke();
+    };
+
+    inputNome.type = "Text";
+    inputTamanho.type = "Number";
+    inputCompleto.type = "Number";
+
+    relogio.width = 1000;
+    relogio.height = 100;
+    relogio.style.width  = '100%';     
+    
+    remover.onclick = function(){
+        relogios.removeChild(div);
+    }
+
+    div.appendChild(relogio);
+
+    div.appendChild(labelNome);
+    div.appendChild(inputNome);
+    div.appendChild(document.createElement("BR"));
+
+    div.appendChild(labelTamanho);
+    div.appendChild(inputTamanho);
+    div.appendChild(document.createElement("BR"));
+
+    div.appendChild(labelCompleto);
+    div.appendChild(inputCompleto);
+
+    div.appendChild(remover);
+    div.appendChild(document.createElement("BR"));
+    div.appendChild(document.createElement("BR"));
+
+    div.appendChild(linha);
+    relogios.appendChild(div);    
 }
 
 function rand(min, max){

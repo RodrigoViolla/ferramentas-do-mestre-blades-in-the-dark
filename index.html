@@ -1,6 +1,7 @@
 <meta charset="utf-8"/>
 <html>
     <head>
+        <title>Ferramentas do Mestre - Baldes in the Dark</title>
         <link rel="stylesheet" href="fonts/Kirsty.ttf" />
         <script src="https://kit.fontawesome.com/939de85b07.js" crossorigin="anonymous"></script>
         <script src="ruas.js"></script>
@@ -79,11 +80,15 @@
             
             <button onclick="limpar()">Limpar</button>
             <button onclick="gerar()" style="float: right;">Gerar</button> 
-            
+            <div style="float: right;">&nbsp;</div>
+            <button onclick="addRelogio()" style="float: right;">Novo Relógio</button>            
         </div>
-        <div style="width: 59%; float: right;" id="gerados">
-            
+        <div style="width: 59%; float: right;">   
+            <div class="cabec"><i class="fas fa-clock"></i> Relógios:</div>  
+            <div id="relogios" class="content"></div>
         </div>
+        <div style="width: 59%; float: right;" id="gerados">                     
+        </div>        
     </body>
 </html>
 <style>
