@@ -1,3 +1,29 @@
+var abaAtual = "relogiosDiv";
+
+window.addEventListener('load', function () {    
+    document.getElementById('pessoasDiv').hidden = 'true';
+    document.getElementById('golpesDiv').hidden = 'true';
+    document.getElementById('ruasDiv').hidden = 'true';
+    document.getElementById('prediosDiv').hidden = 'true';
+});
+
+function mudarAba(aba, botao){
+    document.getElementById('relogiosDiv').hidden = 'true';
+    document.getElementById('pessoasDiv').hidden = 'true';
+    document.getElementById('golpesDiv').hidden = 'true';
+    document.getElementById('ruasDiv').hidden = 'true';
+    document.getElementById('prediosDiv').hidden = 'true'; 
+    
+    document.getElementById('btnRelogios').classList.remove("aba-ativa");
+    document.getElementById('btnPessoas').classList.remove("aba-ativa");
+    document.getElementById('btnRuas').classList.remove("aba-ativa");
+    document.getElementById('btnPredios').classList.remove("aba-ativa");
+    document.getElementById('btnGolpes').classList.remove("aba-ativa");
+
+    document.getElementById(aba).removeAttribute("hidden");
+    document.getElementById(botao).classList.add("aba-ativa");
+}
+
 function gerar(){
     var ruas = getRuas();
     var predios = getPredios();
@@ -59,8 +85,12 @@ function gerar(){
         }
         
         html += "<button style='float: right'"+
-        "onclick='document.getElementById(\"gerados\").removeChild(this.parentNode.parentNode);'>"+
+        "onclick='document.getElementById(\"ruasDiv\").removeChild(this.parentNode.parentNode);'>"+
         "Remover</button><br><br></div></div>";
+
+        document.getElementById('ruasDiv').innerHTML += html;
+
+        html = "";
     }
     
     if (prediosParam) {
@@ -87,9 +117,9 @@ function gerar(){
 
             html += "<div><div class='cabec'>"+
             "<i class='fa fa-university '></i> "+
-            "Predio</div>"+
+            "Prédio</div>"+
             "<div class='content'>"+
-            "Descrição: Predio de " + predio.exterior.material + " e " + predio.exterior.detalhe + "<br>" +
+            "Descrição: Prédio de " + predio.exterior.material + " e " + predio.exterior.detalhe + "<br>" +
             "Ocupação: " + predio.ocupacao + "<br>" +            
             "<hr><div class='titulo'>Detalhes</div><br>";
             
@@ -98,8 +128,12 @@ function gerar(){
             }
             
             html += "<button style='float: right'"+
-            "onclick='document.getElementById(\"gerados\").removeChild(this.parentNode.parentNode);'>"+
+            "onclick='document.getElementById(\"prediosDiv\").removeChild(this.parentNode.parentNode);'>"+
             "Remover</button><br><br></div></div>";
+
+            document.getElementById('prediosDiv').innerHTML += html;
+
+            html = "";
         }        
     }
 
@@ -144,8 +178,12 @@ function gerar(){
             "Interesse: " + pessoa.interesse;
             
             html += "<button style='float: right'"+
-            "onclick='document.getElementById(\"gerados\").removeChild(this.parentNode.parentNode);'>"+
+            "onclick='document.getElementById(\"pessoasDiv\").removeChild(this.parentNode.parentNode);'>"+
             "Remover</button><br><br></div></div>";
+
+            document.getElementById('pessoasDiv').innerHTML += html;
+
+            html = "";
         }
     }
 
@@ -210,12 +248,14 @@ function gerar(){
             html += surpresaParam ? "Surpresa: "+golpe.surpresa+"<br>" : "";
                         
             html += "<button style='float: right'"+
-            "onclick='document.getElementById(\"gerados\").removeChild(this.parentNode.parentNode);'>"+
+            "onclick='document.getElementById(\"golpesDiv\").removeChild(this.parentNode.parentNode);'>"+
             "Remover</button><br><br></div></div>";
+
+            document.getElementById('golpesDiv').innerHTML += html;
+
+            html = "";
         }        
     }
-    
-    document.getElementById('gerados').innerHTML += html;
 }
 
 function limpar(){
