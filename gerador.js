@@ -1,10 +1,15 @@
 var abaAtual = "relogiosDiv";
+var relogiosConstruidos = [];
+var cartilhasGeradas = [];
 
 window.addEventListener('load', function () {    
     document.getElementById('pessoasDiv').hidden = 'true';
     document.getElementById('golpesDiv').hidden = 'true';
     document.getElementById('ruasDiv').hidden = 'true';
     document.getElementById('prediosDiv').hidden = 'true';
+    document.getElementById('fichasDiv').hidden = 'true';
+
+    document.getElementById('btnRelogios').classList.add("aba-ativa");     
 });
 
 function mudarAba(aba, botao){
@@ -13,12 +18,14 @@ function mudarAba(aba, botao){
     document.getElementById('golpesDiv').hidden = 'true';
     document.getElementById('ruasDiv').hidden = 'true';
     document.getElementById('prediosDiv').hidden = 'true'; 
+    document.getElementById('fichasDiv').hidden = 'true';
     
     document.getElementById('btnRelogios').classList.remove("aba-ativa");
     document.getElementById('btnPessoas').classList.remove("aba-ativa");
     document.getElementById('btnRuas').classList.remove("aba-ativa");
     document.getElementById('btnPredios').classList.remove("aba-ativa");
     document.getElementById('btnGolpes').classList.remove("aba-ativa");
+    document.getElementById('btnFichas').classList.remove("aba-ativa");
 
     document.getElementById(aba).removeAttribute("hidden");
     document.getElementById(botao).classList.add("aba-ativa");
@@ -261,9 +268,10 @@ function gerar(){
 function limpar(){
     document.getElementById('gerados').innerHTML = "";
     document.getElementById('relogios').innerHTML = "";
+    relogiosConstruidos = [];
 }
 
-function addRelogio(){
+function addRelogio(relogioParam = null){   
     var relogios = document.getElementById("relogios");
     var div = document.createElement("DIV");
     
@@ -284,52 +292,31 @@ function addRelogio(){
     remover.appendChild(document.createTextNode("Remover"));
     remover.style.float = "right";
 
-    inputNome.onchange = function(){
-        canvas.clearRect(0, 0, relogio.width, relogio.height);
-        canvas.font = "30px Kirsty";
-        canvas.fillText(inputNome.value, 75, 60);
-        
-        canvas.beginPath();
-        canvas.lineWidth = 5;
-        canvas.arc(35, 50, 20, 0, Math.PI * 2);
-        canvas.stroke();
+    if(relogioParam == null){
+        var relogioObj = {};
+        relogioObj.nome = "Novo relógio";
+        relogioObj.tamanho = 4;
+        relogioObj.completo = 0;
+    }else{
+        var relogioObj = relogioParam;
+        inputNome.value = relogioObj.nome;
+        inputTamanho.value = relogioObj.tamanho;
+        inputCompleto.value = relogioObj.completo;
+    }
 
-        canvas.beginPath();
-        canvas.lineWidth = 20;
-        canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
-        canvas.stroke();
+    inputNome.onchange = function(){
+        relogioObj.nome = inputNome.value;
+        updateRelogio(inputNome.value, inputTamanho.value, inputCompleto.value, canvas, relogio);
     };
 
     inputTamanho.onchange = function(){
-        canvas.clearRect(0, 0, relogio.width, relogio.height);
-        canvas.font = "30px Kirsty";
-        canvas.fillText(inputNome.value, 75, 60);
-        
-        canvas.beginPath();
-        canvas.lineWidth = 5;
-        canvas.arc(35, 50, 20, 0, Math.PI * 2);
-        canvas.stroke();
-
-        canvas.beginPath();
-        canvas.lineWidth = 20;
-        canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
-        canvas.stroke();
+        relogioObj.tamanho = inputTamanho.value;
+        updateRelogio(inputNome.value, inputTamanho.value, inputCompleto.value, canvas, relogio);
     };
 
     inputCompleto.onchange = function(){
-        canvas.clearRect(0, 0, relogio.width, relogio.height);
-        canvas.font = "30px Kirsty";
-        canvas.fillText(inputNome.value, 75, 60);
-        
-        canvas.beginPath();
-        canvas.lineWidth = 5;
-        canvas.arc(35, 50, 20, 0, Math.PI * 2);
-        canvas.stroke();
-
-        canvas.beginPath();
-        canvas.lineWidth = 20;
-        canvas.arc(35, 50, 20, 0, Math.PI * ((2/inputTamanho.value)*inputCompleto.value));
-        canvas.stroke();
+        relogioObj.completo = inputCompleto.value;
+        updateRelogio(inputNome.value, inputTamanho.value, inputCompleto.value, canvas, relogio);
     };
 
     inputNome.type = "Text";
@@ -341,8 +328,11 @@ function addRelogio(){
     relogio.style.width  = '100%';
     
     remover.onclick = function(){
+        relogiosConstruidos.splice( relogiosConstruidos.indexOf(relogioObj), 1 );
         relogios.removeChild(div);
     }
+
+    updateRelogio(relogioObj.nome, relogioObj.tamanho, relogioObj.completo, canvas, relogio);
 
     div.appendChild(relogio);
 
@@ -361,10 +351,136 @@ function addRelogio(){
     div.appendChild(document.createElement("BR"));
     div.appendChild(document.createElement("BR"));
 
+    relogiosConstruidos.push(relogioObj);
     div.appendChild(linha);
     relogios.appendChild(div);
 }
 
+function relogiosToJson(){
+    var el = document.createElement('textarea');
+    el.value = JSON.stringify(relogiosConstruidos);
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+
+    window.alert("Copiado para a área de tranferência");
+}
+
+function cartilhasToJson(){
+    var el = document.createElement('textarea');
+    el.value = JSON.stringify(cartilhasGeradas);
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+
+    window.alert("Copiado para a área de tranferência");
+}
+
+function jsonToRelogios(){
+    var relogios = prompt("Entre com o JSON dos relógios:");
+    relogios = JSON.parse(relogios);
+
+    relogios.forEach(relogio => {
+        addRelogio(relogio);
+    });
+}
+
+function jsonToCartilhas(){
+    var cartilhas = prompt("Entre com o JSON das cartilhas:");
+    cartilhas = JSON.parse(cartilhas);
+
+    
+    cartilhas.forEach(cartilha => {
+        cartilhasGeradas.push(cartilha);
+        var cartilhaDiv = document.getElementById('cartilhas').appendChild(renderizarCartilha(cartilha));
+        
+        btnRemover = document.createElement("BUTTON");
+        btnRemover.appendChild(document.createTextNode("Remover"));
+        btnRemover.onclick = function(){
+            cartilhasGeradas.splice( cartilhasGeradas.indexOf(cartilha), 1 );
+            redesenharCartilhas();
+        }
+
+        btnRemover.style.float = "right";
+        btnRemover.style.marginBottom = "20px";
+
+        cartilhaDiv.appendChild(btnRemover);
+    });    
+}
+
+function updateRelogio(nome, tamanho, completo, canvas, relogio){    
+    canvas.clearRect(0, 0, relogio.width, relogio.height);
+    canvas.font = "30px Kirsty";
+    canvas.fillText(nome, 75, 60);
+    
+    canvas.beginPath();
+    canvas.lineWidth = 5;
+    canvas.arc(35, 50, 20, 0, Math.PI * 2);
+    canvas.stroke();
+
+    canvas.beginPath();
+    canvas.lineWidth = 20;
+    canvas.arc(35, 50, 20, 0, Math.PI * ((2/tamanho)*completo));
+    canvas.stroke();
+}
+
+function addCartilha(){
+    var cartilha = {};
+    cartilha.tipo = "Cartilha";
+    cartilha.nome = "Nome";
+    cartilha.bando = "Bando";
+    cartilha.alcunha = "Alcunha";
+    cartilha.aparencia = "Aparência";
+    cartilha.raizes = "Raizes";
+    cartilha.historico = "Histórico";
+    cartilha.vicio = "Vício";
+    cartilha.dano3 = "";
+    cartilha.dano21 = "";
+    cartilha.dano22 = "";
+    cartilha.dano11 = "";
+    cartilha.dano12 = "";
+    cartilha.estresse = 0;
+    cartilha.trauma = 0;
+
+    var cartilhaDiv = renderizarCartilha(cartilha);
+
+    document.getElementById('cartilhas').appendChild(cartilhaDiv);
+    cartilhasGeradas.push(cartilha);    
+
+    btnRemover = document.createElement("BUTTON");
+    btnRemover.appendChild(document.createTextNode("Remover"));
+    btnRemover.onclick = function(){        
+        cartilhasGeradas.splice( cartilhasGeradas.indexOf(cartilha), 1 );
+        redesenharCartilhas();
+    }
+
+    btnRemover.style.float = "right";
+    btnRemover.style.marginBottom = "20px";
+
+    cartilhaDiv.appendChild(btnRemover);
+}
+
 function rand(min, max){
     return Math.floor(Math.random() * (+max - +min)) + +min;
+}
+
+function redesenharCartilhas(){
+    document.getElementById('cartilhas').innerHTML = "";
+    cartilhasGeradas.forEach(cartilha => {
+        var cartilhaDiv = document.getElementById('cartilhas').appendChild(renderizarCartilha(cartilha));
+        
+        btnRemover = document.createElement("BUTTON");
+        btnRemover.appendChild(document.createTextNode("Remover"));
+        btnRemover.onclick = function(){
+            cartilhasGeradas.splice( cartilhasGeradas.indexOf(cartilha), 1 );
+            redesenharCartilhas();
+        }
+
+        btnRemover.style.float = "right";
+        btnRemover.style.marginBottom = "20px";
+
+        cartilhaDiv.appendChild(btnRemover);
+    });
 }

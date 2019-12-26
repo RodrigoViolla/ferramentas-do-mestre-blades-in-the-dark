@@ -8,6 +8,7 @@
         <script src="predios.js"></script>
         <script src="pessoas.js"></script>
         <script src="golpes.js"></script>
+        <script src="cartilha.js"></script>
         <script src="gerador.js"></script>
     </head>    
     <body>
@@ -80,8 +81,7 @@
             
             <button onclick="limpar()">Limpar</button>
             <button onclick="gerar()" style="float: right;">Gerar</button> 
-            <div style="float: right;">&nbsp;</div>
-            <button onclick="addRelogio()" style="float: right;">Novo Relógio</button>            
+            <div style="float: right;">&nbsp;</div>            
         </div>
         <div class="abas" style="width: 59%; float: right;">
             <button id="btnRelogios" onclick="mudarAba('relogiosDiv', 'btnRelogios')">Relógios</button>
@@ -89,9 +89,14 @@
             <button id="btnRuas" onclick="mudarAba('ruasDiv', 'btnRuas')">Ruas</button>
             <button id="btnPredios" onclick="mudarAba('prediosDiv', 'btnPredios')">Prédios</button>
             <button id="btnGolpes" onclick="mudarAba('golpesDiv', 'btnGolpes')">Golpes</button>
+            <button id="btnFichas" onclick="mudarAba('fichasDiv', 'btnFichas')">Cartilhas</button>
         </div>
         <div style="width: 59%; float: right;" id="relogiosDiv">   
-            <div class="cabec"><i class="fas fa-clock"></i> Relógios:</div>  
+            <div class="cabec"><i class="fas fa-clock"></i> Relógios: 
+                <button onclick="relogiosToJson()">Salvar</button>
+                <button onclick="jsonToRelogios()">Carregar</button>
+                <button onclick="addRelogio()" style="float: right;">Novo Relógio</button>
+            </div>
             <div id="relogios" class="content"></div>
         </div>
         <div style="width: 59%; float: right;" id="gerados">                     
@@ -103,11 +108,24 @@
         <div style="width: 59%; float: right;" id="ruasDiv">                     
         </div>
         <div style="width: 59%; float: right;" id="golpesDiv">                     
-        </div>
+        </div>   
+        <div style="width: 59%; float: right; background-color: #eee;" id="fichasDiv">
+            <div class="cabec"><i class="fas fa-users"></i> Cartilhas: 
+                <button onclick="cartilhasToJson()">Salvar</button>
+                <button onclick="jsonToCartilhas()">Carregar</button>
+                <button onclick="addCartilha()" style="float: right;">Nova Cartilha</button>
+            </div>
+            <div id="cartilhas" class="content"></div>
+        </div>     
     </body>
 </html>
 <style>
-@font-face { font-family: Kirsty; src: url('fonts/Kirsty.ttf'); } 
+@font-face { 
+    font-family: Kirsty; src: url('fonts/Kirsty.ttf');     
+} 
+@font-face { 
+    font-family: MinionProRegular; src: url('fonts/Minion_Pro_Regular.ttf');
+} 
 .cabec{
     background-color: #111; 
     color: white;
@@ -116,9 +134,20 @@
     font-family: Kirsty;
     font-size: 25px;
 }
+.tipo-cartilha{
+    background-color: #111; 
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    font-family: Kirsty;
+    font-size: 25px;
+    border: none;
+    width: 100%;
+}
 .content{
     padding: 10px;
     background-color: #EEE;
+    font-family: MinionProRegular;
 }
 .titulo{
     font-weight: bold;
@@ -141,7 +170,22 @@ button:hover{
 }
 .aba-ativa{
     cursor: pointer !important;
-    background-color: #eeeeee !important;
+    background-color: #ddd !important;
     color: #111 !important;
+}
+.campo-ficha{
+    background:#eee;
+    border: none;
+    width: 100%;
+    font-family: MinionProRegular;
+}
+.cabec-ficha{
+    background-color: #111; 
+    color: white;
+    font-weight: bold;
+    font-family: Kirsty;
+}
+table {
+  border-collapse: collapse;
 }
 </style>
