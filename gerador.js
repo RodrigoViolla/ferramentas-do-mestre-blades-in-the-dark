@@ -403,7 +403,7 @@ function jsonToCartilhas(){
             redesenharCartilhas();
         }
 
-        btnRemover.style.float = "right";
+        btnRemover.style.float = "left";
         btnRemover.style.marginBottom = "20px";
 
         cartilhaDiv.appendChild(btnRemover);
@@ -443,6 +443,22 @@ function addCartilha(){
     cartilha.dano12 = "";
     cartilha.estresse = 0;
     cartilha.trauma = 0;
+    cartilha.cartilha = 0;
+    cartilha.esperteza = 0;
+    cartilha.valentia = 0;
+    cartilha.conviccao = 0;
+    cartilha.cacar = 0;
+    cartilha.estudar = 0;
+    cartilha.sondar = 0;
+    cartilha.adulterar = 0;
+    cartilha.manejar = 0;
+    cartilha.brigar = 0;
+    cartilha.detonar = 0;
+    cartilha.sintonizar = 0;
+    cartilha.comandar = 0;
+    cartilha.socializar = 0;
+    cartilha.convencer = 0;
+    cartilha.esgueirar = 0;
 
     var cartilhaDiv = renderizarCartilha(cartilha);
 
@@ -456,7 +472,7 @@ function addCartilha(){
         redesenharCartilhas();
     }
 
-    btnRemover.style.float = "right";
+    btnRemover.style.float = "left";
     btnRemover.style.marginBottom = "20px";
 
     cartilhaDiv.appendChild(btnRemover);
@@ -478,7 +494,7 @@ function redesenharCartilhas(){
             redesenharCartilhas();
         }
 
-        btnRemover.style.float = "right";
+        btnRemover.style.float = "left";
         btnRemover.style.marginBottom = "20px";
 
         cartilhaDiv.appendChild(btnRemover);
